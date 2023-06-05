@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Memories</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%}">
+    <style>
+
+      /* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Header Styles */
+  header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+  }
+  
+  nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  nav ul li {
+    display: inline;
+    margin-right: 10px;
+  }
+  
+  nav ul li a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  /* Main Styles */
+  main {
+    text-align: center;
+    padding: 50px;
+  }
+  
+  h1 {
+    color: #333;
+  }
+  
+  .memory-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 30px;
+  }
+  
+  .memory-item {
+    width: 300px;
+    margin: 20px;
+    padding: 20px;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .memory-item:hover {
+    transform: scale(1.05);
+  }
+  
+  .memory-item img {
+    width: 100%;
+    border-radius: 5px;
+  }
+  
+  /* Footer Styles */
+  footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+  }
+
+  /* extra style of main.html */
+
+  .add-Memory{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    color:#fff;
+    font-size:1rem;
+    border:1px solid black;
+    padding:1%;
+    border-radius:20px;
+    background-color:#333;
+  }
+
+  @media screen and (max-width:700px){
+    .add-Memory{
+      font-size:0.65rem;
+      {% comment %} padding:0.5%; {% endcomment %}
+      padding-left:6px;
+      padding-right:6px;
+      border-radius:13px;
+    }
+    h3{
+      font-size:0.9rem;
+    }
+  }
+
+
+  .add-Memory:hover{
+    transform: scale(1.05);
+  }
+
+
+  /* Modal Window Form for Memory Creation Css */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    margin: 20% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+  }
+  
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  /* Modal Window Form Style Css */
+  h1 {
+    color: #333;
+    }
+
+    .form-group {
+    margin-bottom: 20px;
+    }
+
+    label {
+    display: block;
+    margin-bottom: 5px;
+    }
+
+    input {
+    padding: 10px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    }
+
+    button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    }
+
+    /* favourites message CSS */
+    .messageRelated{
+        border: 2px solid green;
+        background-color: rgba(0, 255, 0, 0.1); /* Transparent green background */
+        padding: 10px;
+    }
+
+    .message-removed{
+      border: 2px solid red;
+      background-color: rgba(255, 0, 0, 0.1); /* Transparent red background */
+      padding: 10px;
+    }
+
+    </style>
+  </head>
+  <body>
+    {% comment %} {% include 'navbar.html' %}  {% endcomment %}
+
+   <header>
+    <nav>
+      <ul>
+        {% comment %} <li><a href="/">Home</a></li> {% endcomment %}
+        <li><a href="/">Memories</a></li>
+        <li><a href="/">About</a></li>
+
+        <button><a style="text-decoration:none;color:#fff;" href="/logout/">Logout</a></button>
+      </ul>
+    </nav>
+  </header>
+  <div id="messageRelated"></div>
+
+    {% block content %}{% endblock content %} 
+
+    <footer>
+      <p>&copy; 2023 My Memories. All rights reserved.</p>
+    </footer>
+
+
+
+    <script>
+      //Javascript for Modal Window
+      document.addEventListener("DOMContentLoaded", function() {
+        var openModalButton = document.getElementById("open-modal");
+        var closeModalButton = document.querySelector(".close");
+        var modal = document.getElementById("memory-modal");
+      
+        openModalButton.addEventListener("click", function() {
+          modal.style.display = "block";
+        });
+      
+        closeModalButton.addEventListener("click", function() {
+          modal.style.display = "none";
+        });
+      
+        window.addEventListener("click", function(event) {
+          if (event.target === modal) {
+            modal.style.display = "none";
+          }
+        });
+      
+        var memoryForm = document.getElementById("memory-form");
+      
+      });
+      
+      //Javascript function to go to top while messages are appeared
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+      
+      function showSuccessMessage(event) {
+        topFunction()
+
+        var successMessage = document.createElement("div");
+        if(event==="Add"){
+        successMessage.textContent = "Successfully added to Favourites!!!";
+        successMessage.classList.add("messageRelated")
+        }else if(event==="Remove"){
+          successMessage.textContent = "Removed from Favourites!!!";
+          successMessage.classList.add("message-removed")
+        }
+        document.getElementById('messageRelated').appendChild(successMessage);
+        
+        //setTimeOut function will execute its inner function after delay of specified time this is functionality of setTimeout Function:
+        setTimeout(function() {
+          successMessage.remove();
+          document.getElementById('messageRelated').style.display = "none";
+        }, 2000);
+      }
+
+
+    </script>
+
+  </body>
+</html>
+

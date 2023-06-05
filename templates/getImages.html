@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* Global Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    
+    /* Header Styles */
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+    }
+    
+    nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+    
+    nav ul li {
+      display: inline;
+      margin-right: 10px;
+    }
+    
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+    
+    /* Main Styles */
+    main {
+      text-align: center;
+      padding: 50px;
+    }
+    
+    h1 {
+      color: #333;
+    }
+    
+    #image-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .image-item {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      margin: 10px;
+      overflow: hidden;
+    }
+    
+    .image-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    
+    .image-item:hover img {
+      transform: scale(1.1);
+    }
+    
+    /* ... Previous CSS styles ... */
+    
+    .lds-hourglass {
+      display: inline-block;
+      position: relative;
+      width: 80px;
+      height: 80px;
+    }
+    .lds-hourglass:after {
+      content: " ";
+      display: block;
+      border-radius: 50%;
+      width: 0;
+      height: 0;
+      margin: 8px;
+      box-sizing: border-box;
+      border: 32px solid #5e6fa3;
+      border-color: #5e6fa3 transparent #5e6fa3 transparent;
+      animation: lds-hourglass 1.2s infinite;
+    }
+    @keyframes lds-hourglass {
+      0% {
+        transform: rotate(0);
+        animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+      }
+      50% {
+        transform: rotate(900deg);
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+      }
+      100% {
+        transform: rotate(1800deg);
+      }
+    }
+    
+    /* Footer Styles */
+    footer {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .Null-images{
+        font-size:2rem;
+        text-align:center;
+        padding:5% 0% 5% 0%;
+    }
+
+    /* Modal Window Css */
+    h1 {
+      color: #333;
+      }
+  
+      .form-group {
+      margin-bottom: 20px;
+      }
+  
+      label {
+      display: block;
+      margin-bottom: 5px;
+      }
+  
+      input {
+      padding: 10px;
+      width: 300px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      }
+  
+      button {
+      padding: 10px 20px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      }
+
+
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.6);
+      }
+      
+      .modal-content {
+        background-color: #fff;
+        margin: 20% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 600px;
+      }
+      
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      
+      .close:hover,
+      .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      /* DropDowns Style */
+      .dropdown {
+        position: relative;
+        display: inline-block;
+        float:right;
+      }
+      
+      .dots {
+        width: 4px;
+        height: 4px;
+        background-color: #fff;
+        border-radius: 50%;
+        cursor: pointer;
+        margin-bottom: 3.7px;
+      }
+      
+      .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        display: none;
+        background-color: #fff;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+        margin-left: -60px; 
+      }
+      
+      .dropdown-menu li {
+        padding: 10px;
+      }
+      
+      .dropdown:hover .dropdown-menu {
+        display: block;
+        border-radius:14px;
+        text-align:center;
+
+      }
+
+      .dropdown-menu li a{
+        text-decoration: none;
+        color: black;
+      }
+      
+
+      
+      
+  </style>
+</head>
+<body>
+  <!-- HTML content goes here -->
+    
+        <header>
+            <nav>
+            <ul>
+                {% comment %} <li><a href="/">Home</a></li> {% endcomment %}
+                <li><a href="/">Memories</a></li>
+                <li><a href="/">About</a></li>
+                <button id="open-modal" class="add-Memory">Add Images</button>
+            
+
+            {% comment %} dropdown {% endcomment %}
+                <div class="dropdown">
+                  <div class="dots"></div>
+                  <div class="dots"></div>
+                  <div class="dots"></div>
+
+                  <ul class="dropdown-menu">
+                    <li><a href="/delete/{{idash}}">Delete</a></li>
+                    {% comment %} <li><a href="#">Option 2</a></li> {% endcomment %}
+                    {% comment %} <li><a href="#">Option 3</a></li> {% endcomment %}
+                  </ul>
+                </div>
+
+              </ul>
+            </nav>
+        </header>
+
+        <div class="covering-amination" style="display:flex;justify-content:center;padding:10% 0 5% 0%;"><div class="lds-hourglass"></div></div>
+
+        <main>
+            <h1>Image Gallery</h1>
+            <div style="font-size:1.2rem;padding-bottom:1%;">Total Images: {{imagecount}}</div>
+            <div id="image-container">
+  
+            </div>
+            </div>
+        </main>
+
+        <div id="memory-modal" class="modal">
+          <div class="modal-content ">
+            <h1 style="text-align:center;">Add More Images</h1>
+            <span class="close">&times;</span>
+        
+            <div style="text-align:center;">
+        
+            <form id="memory-form" method="POST" action="/addMoreImages/{{idash}}/" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="form-group">  
+                <label for="backgroundImage">Images:</label>
+                <input type="file" name="imagesMultiple" id="fileInput" multiple>
+                {% comment %} <button onclick="{uploadFiles()}">Upload</button> {% endcomment %}
+              </div>
+        
+              <div style="display:flex;justify-content:center;"> <button type="submit" id="submit-btn">Submit</button></div>
+            </form>
+            
+          </div>
+        
+          
+          </div>
+        </div>
+  
+  <script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+
+      var openModalButton = document.getElementById("open-modal");
+      var closeModalButton = document.querySelector(".close");
+      var modal = document.getElementById("memory-modal");
+    
+      openModalButton.addEventListener("click", function() {
+        modal.style.display = "block";
+      });
+    
+      closeModalButton.addEventListener("click", function() {
+        modal.style.display = "none";
+      });
+    
+      window.addEventListener("click", function(event) {
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+    
+      //var memoryForm = document.getElementById("memory-form");
+    
+    });
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        var imageContainer = document.getElementById("image-container");
+        var loadingAnimation = document.querySelector(".lds-hourglass");
+        var coveringAnimation = document.querySelector(".covering-amination");
+        var images = [
+
+            {% for item in myImages %}
+                "{{ item.url }}",
+            {% endfor %}
+          ];
+
+          var imageName = [
+                {% for item in myImages %}
+                    {{ item.nameImage }},
+                {% endfor %}
+          ];
+
+
+        if (images.length===0){
+          var NullItem = document.createElement("div");
+              NullItem.classList.add("Null-images");
+              NullItem.innerHTML = "No images for this memory";
+              imageContainer.appendChild(NullItem);
+              loadingAnimation.style.display = "none";
+              coveringAnimation.style.display = "none";
+        }else{
+        setTimeout(function() {
+
+          for (var i = 0; i < images.length; i++) {
+            var imageItem = document.createElement("div");
+            imageItem.classList.add("image-item");
+    
+            var image = document.createElement("img");
+            image.src = images[i];
+            image.alt = imageName[i];
+    
+            imageItem.appendChild(image);
+            imageContainer.appendChild(imageItem);
+        }
+
+            loadingAnimation.style.display = "none";
+            coveringAnimation.style.display = "none";
+            }, 2000);
+          }
+
+      });
+      
+
+  </script>
+</body>
+</html>

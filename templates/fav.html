@@ -1,0 +1,33 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block content %}
+
+<main>
+
+<div style="text-align:center;">
+  <h1>Welcome to Your Favourite Memories</h1>
+  <h2> Memories Count: {{memoriesCount}}</h2>
+</div>
+  
+  <hr>
+
+  <div class="memory-list">
+    {% for memory in memories%}
+    <a style="text-decoration:none;color:black;" href="/getImages/{{memory.id}}/">
+    <div class="memory-item">
+      <img style="height:300px;" src="{{memory.backgroundImage.url}}" alt="Memory 1">
+      <h2>{{memory.title}}</h2>
+      <p>{{memory.descrition}}</p>
+      <div style="display:flex;justify-content:center;"> <a style="text-decoration:none; color:#fff;background-color:#333;padding:2% 4%;border-radius:14px;" href="/removefromfavourite/{{memory.id}}/" onclick="showSuccessMessage('Remove')">Remove From Favourite</a></div>
+    </div>
+    </a>
+   
+    {%endfor%}
+  </div>
+</main>
+
+
+
+
+{% endblock content %}

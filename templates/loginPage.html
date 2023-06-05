@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Memories</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%}">
+    <style>
+
+        /* Global Styles */
+        body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        }
+
+        /* Main Styles */
+        main {
+        text-align: center;
+        padding: 50px;
+        }
+
+        h1 {
+        color: #333;
+        }
+
+        .form-group {
+        margin-bottom: 20px;
+        }
+
+        label {
+        display: block;
+        margin-bottom: 5px;
+        }
+
+        input {
+        padding: 10px;
+        width: 300px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        }
+
+        button {
+        padding: 10px 20px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        }
+
+        .hidden {
+        display: none;
+        }
+
+        .message {
+            border: 2px solid red;
+            background-color: rgba(255, 0, 0, 0.1); /* Transparent red background */
+            padding: 10px;
+          }
+
+    </style>
+  </head>
+  <body>
+
+
+
+<main>
+    <h1>Login</h1>
+    <form id="login-form" method="POST" action="/login/">
+        {% csrf_token %}
+      <div class="form-group">
+        <label for="username">UserName:</label>
+        <input type="text" id="email" name="username" placeholder="Enter UserName">
+      </div>
+      <div class="form-group" id="password-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password">
+      </div>
+      {%for message in messages%}
+          <div class="message">{{message}}</div>
+      {%endfor%}
+     <div style="display:flex;justify-content:center;"> <button type="submit"  id="submit-btn">Submit</button></div>
+    </form>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var emailInput = document.getElementById("email");
+        var passwordGroup = document.getElementById("password-group");
+        var passwordInput = document.getElementById("password");
+        var submitButton = document.getElementById("submit-btn");
+      
+        passwordGroup.style.display = "none";
+        submitButton.style.display = "none";
+      
+        emailInput.addEventListener("input", function() {
+          if (emailInput.value !== "") {
+            passwordGroup.style.display = "block";
+          } else {
+            passwordGroup.style.display = "none";
+            submitButton.style.display = "none";
+          }
+        });
+      
+        passwordInput.addEventListener("input", function() {
+          if (passwordInput.value !== "") {
+            submitButton.style.display = "block";
+          } else {
+            submitButton.style.display = "none";
+          }
+        });
+      });
+      
+  </script>
+</body>
+</html>
+
+
+

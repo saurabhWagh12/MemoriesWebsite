@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Memories</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%}">
+    <style>
+
+        /* Global Styles */
+        body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        }
+
+        /* Main Styles */
+        main {
+        text-align: center;
+        padding: 50px;
+        }
+
+        h1 {
+        color: #333;
+        }
+
+        .form-group {
+        margin-bottom: 20px;
+        }
+
+        label {
+        display: block;
+        margin-bottom: 5px;
+        }
+
+        input {
+        padding: 10px;
+        width: 300px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        }
+
+        button {
+        padding: 10px 20px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        }
+
+        .hidden {
+        display: none;
+        }
+
+        .message {
+            border: 2px solid green;
+            background-color: rgba(0, 255, 0, 0.1); /* Transparent green background */
+            padding: 10px;
+          }
+          
+
+
+    </style>
+  </head>
+  <body>
+    <main>
+        <h1>Registration</h1>
+        <form id="registration-form" method="POST" action="/register/">
+            {% csrf_token %}
+          <div class="form-group">
+            <label for="first-name">First Name:</label>
+            <input type="text" id="first-name" name="first-name" placeholder="Enter your first name">
+          </div>
+          <div class="form-group">
+            <label for="last-name">Last Name:</label>
+            <input type="text" id="" name="last-name" placeholder="Enter your last name">
+          </div>
+          <div class="form-group">
+            <label for="last-name">Email:</label>
+            <input type="email" id="last-name" name="email" placeholder="Enter your email">
+          </div>
+          <div class="form-group" id="username-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username">
+          </div>
+          <div class="form-group" id="password-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password">
+          </div>
+
+          {%for message in messages%}
+                <div class="message">{{message}}</div>
+          {%endfor%}
+
+          <div style="display:flex;justify-content:center;"> <button type="submit"  id="submit-btn">Submit</button></div>
+        </form>
+      </main>
+
+
+  <script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+        var firstNameInput = document.getElementById("first-name");
+        var lastNameInput = document.getElementById("last-name");
+        var usernameGroup = document.getElementById("username-group");
+        var usernameInput = document.getElementById("username");
+        var passwordGroup = document.getElementById("password-group");
+        var passwordInput = document.getElementById("password");
+        var submitButton = document.getElementById("submit-btn");
+      
+        usernameGroup.style.display = "none";
+        passwordGroup.style.display = "none";
+        submitButton.style.display = "none";
+      
+        firstNameInput.addEventListener("input", function() {
+          if (firstNameInput.value !== "" && lastNameInput.value !== "") {
+            usernameGroup.style.display = "block";
+          } else {
+            usernameGroup.style.display = "none";
+            passwordGroup.style.display = "none";
+            submitButton.style.display = "none";
+          }
+        });
+      
+        lastNameInput.addEventListener("input", function() {
+          if (firstNameInput.value !== "" && lastNameInput.value !== "") {
+            usernameGroup.style.display = "block";
+          } else {
+            usernameGroup.style.display = "none";
+            passwordGroup.style.display = "none";
+            submitButton.style.display = "none";
+          }
+        });
+      
+        usernameInput.addEventListener("input", function() {
+          if (usernameInput.value !== "") {
+            passwordGroup.style.display = "block";
+          } else {
+            passwordGroup.style.display = "none";
+            submitButton.style.display = "none";
+          }
+        });
+      
+        passwordInput.addEventListener("input", function() {
+          if (passwordInput.value !== "") {
+            submitButton.style.display = "block";
+          } else {
+            submitButton.style.display = "none";
+          }
+        });
+      });
+      
+
+  </script>
+</body>
+</html>
